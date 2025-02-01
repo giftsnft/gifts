@@ -1,32 +1,32 @@
-/* Основной стиль (светлая тема, как в Telegram) */
+/* Песочная палитра */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #ffffff; /* Белый фон */
-    color: #222222; /* Темно-серый текст */
+    background-color: #fdf6e3;
+    color: #6b543b;
     margin: 0;
     padding: 0;
 }
 
-/* Верхняя панель */
-.header {
+/* Шапка */
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: #f8f9fa; /* Светло-серый */
-    border-bottom: 1px solid #ddd;
+    background-color: #e8c891;
+    border-bottom: 2px solid #d6af72;
 }
 
-.header h1 {
+header h1 {
     font-size: 18px;
-    color: #007bff; /* Синий цвет, как в Telegram */
+    color: #6b543b;
     margin: 0;
 }
 
-/* Кнопка "Connect Wallet" */
+/* Кнопка подключения кошелька */
 #connect-wallet {
-    background: #007bff;
+    background: #c89b53;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -45,22 +45,27 @@ body {
 .filters select, .filters button {
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #d6af72;
     background: white;
-    color: #333;
+    color: #6b543b;
     cursor: pointer;
 }
 
-/* Карточки товаров */
+/* Карточки подарков */
 .gift-card {
-    background: #f9f9f9;
+    background: #fae0bd;
     padding: 15px;
     border-radius: 10px;
     margin: 10px;
     display: inline-block;
-    width: 170px;
+    width: 200px;
     text-align: center;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease-in-out;
+}
+
+.gift-card:hover {
+    transform: scale(1.05);
 }
 
 .gift-card img {
@@ -70,11 +75,18 @@ body {
 
 /* Кнопка покупки */
 .buy-button {
-    background: #007bff;
+    background: #d79e58;
     color: white;
     border: none;
     padding: 8px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.2s ease-in-out;
 }
+
+.buy-button:hover {
+    background: #c08948;
+}
+
+
 

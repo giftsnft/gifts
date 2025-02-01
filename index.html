@@ -8,64 +8,50 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="header">
-        <h1>🎁 Automated Gift MarketPlace</h1>
-        <button id="connect-wallet">🔵 Connect Wallet</button>
-    </div>
+    <!-- Верхняя панель -->
+    <header>
+        <h1>🎁 Gift Marketplace</h1>
+        <button id="connect-wallet">🔵 Connect TON Wallet</button>
+    </header>
 
-    <div class="filters">
-        <select id="nft-filter">
-            <option value="all">All Names</option>
+    <!-- Фильтры -->
+    <section class="filters">
+        <label>🎁 Выбор подарка:</label>
+        <select id="gift-filter">
+            <option value="all">Все подарки</option>
         </select>
-        <select id="model-filter">
-            <option value="all">All Models</option>
+        
+        <label>📦 Выбор модели:</label>
+        <select id="model-filter" disabled>
+            <option value="all">Выберите подарок</option>
         </select>
-        <button id="refresh">🔄</button>
-    </div>
 
-    <div id="marketplace">
-        <p>Loading items...</p>
-    </div>
+        <label>🖼 Фон:</label>
+        <select id="background-filter">
+            <option value="all">Все фоны</option>
+        </select>
 
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+        <label>⭐ Символ:</label>
+        <select id="symbol-filter">
+            <option value="all">Все символы</option>
+        </select>
 
-        async function loadGifts() {
-            let response = await fetch("https://YOUR_SERVER_DOMAIN/gifts");
-            let gifts = await response.json();
+        <label>💰 Сортировка:</label>
+        <select id="sort-filter">
+            <option value="price-low">Цена (по возрастанию)</option>
+            <option value="price-high">Цена (по убыванию)</option>
+            <option value="popularity">Популярность</option>
+            <option value="newest">Новинки</option>
+        </select>
 
-            let container = document.getElementById("marketplace");
-            container.innerHTML = "";
+        <button id="refresh">🔄 Обновить</button>
+    </section>
 
-            gifts.forEach(gift => {
-                let div = document.createElement("div");
-                div.classList.add("gift-card");
-                div.innerHTML = `
-                    <img src="${gift.image_url}" alt="${gift.name}">
-                    <h3>${gift.name}</h3>
-                    <p><strong>${gift.price} TON</strong></p>
-                    <button class="buy-button" onclick="buyGift(${gift.id})">🛒 Купить</button>
-                `;
-                container.appendChild(div);
-            });
-        }
+    <!-- Каталог подарков -->
+    <section id="marketplace">
+        <p>🔄 Загружаем подарки...</p>
+    </section>
 
-        async function buyGift(giftId) {
-            let response = await fetch(`https://YOUR_SERVER_DOMAIN/gifts/${giftId}/buy`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ buyer_id: tg.initDataUnsafe.user.id })
-            });
-            let result = await response.json();
-            alert(result.message);
-            loadGifts();
-        }
-
-        document.getElementById("refresh").addEventListener("click", loadGifts);
-
-        loadGifts();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
