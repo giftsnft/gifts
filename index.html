@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifts Marketplace</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <h1>🎁 Gifts Marketplace</h1>
+    <div id="gifts-container"></div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        async function loadGifts() {
+            let response = await fetch("http://127.0.0.1:5000/gifts");
+            let gifts = await response.json();
+
+            let container = document.getElementById("gifts-container");
+            container.innerHTML = "";
+
+            gifts.forEach(gift => {
+                let div = document.createElement("div");
+                div.innerHTML = `
+                    <h3>${gift.name}</h3>
+                    <p>${gift.description}</p>
+                    <p><strong>${gift.price} TON</strong></p>
+                    <button onclick="buyGift(${gift.id})">Купить</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        async function buyGift(giftId) {
+            let response = await fetch(`http://127.0.0.1:5000/gifts/${giftId}/buy`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ buyer_id: tg.initDataUnsafe.user.id })
+            });
+            let result = await response.json();
+            alert(result.message);
+            loadGifts();
+        }
+
+        loadGifts();
+    </script>
+
+</body>
+</html>
+
