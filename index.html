@@ -3,39 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gifts Marketplace</title>
+    <title>Automated Gift Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <div class="header">
+        <h1>🎁 Automated Gift MarketPlace</h1>
+        <button id="connect-wallet">🔵 Connect Wallet</button>
+    </div>
 
-    <h1>🎁 Gifts Marketplace</h1>
-    <div id="gifts-container"></div>
+    <div class="filters">
+        <select id="nft-filter">
+            <option value="all">All Names</option>
+        </select>
+        <select id="model-filter">
+            <option value="all">All Models</option>
+        </select>
+        <button id="refresh">🔄</button>
+    </div>
+
+    <div id="marketplace">
+        <p>Loading items...</p>
+    </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
         async function loadGifts() {
-            let response = await fetch("http://127.0.0.1:5000/gifts");
+            let response = await fetch("https://YOUR_SERVER_DOMAIN/gifts");
             let gifts = await response.json();
 
-            let container = document.getElementById("gifts-container");
+            let container = document.getElementById("marketplace");
             container.innerHTML = "";
 
             gifts.forEach(gift => {
                 let div = document.createElement("div");
+                div.classList.add("gift-card");
                 div.innerHTML = `
+                    <img src="${gift.image_url}" alt="${gift.name}">
                     <h3>${gift.name}</h3>
-                    <p>${gift.description}</p>
                     <p><strong>${gift.price} TON</strong></p>
-                    <button onclick="buyGift(${gift.id})">Купить</button>
+                    <button class="buy-button" onclick="buyGift(${gift.id})">🛒 Купить</button>
                 `;
                 container.appendChild(div);
             });
         }
 
         async function buyGift(giftId) {
-            let response = await fetch(`http://127.0.0.1:5000/gifts/${giftId}/buy`, {
+            let response = await fetch(`https://YOUR_SERVER_DOMAIN/gifts/${giftId}/buy`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ buyer_id: tg.initDataUnsafe.user.id })
@@ -45,9 +62,10 @@
             loadGifts();
         }
 
+        document.getElementById("refresh").addEventListener("click", loadGifts);
+
         loadGifts();
     </script>
-
 </body>
 </html>
 
