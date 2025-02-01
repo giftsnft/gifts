@@ -1,0 +1,23 @@
+...[
+    {
+        "id": 1,
+        "name": "Eternal Candle",
+        "price": "0.55",
+        "image_url": "https://giftsnft.github.io/gifts/images/candle.png"
+    },
+    {
+        "id": 2,
+
+
+"name": "Witch Hat",
+        "price": "0.55",
+        "image_url": "https://giftsnft.github.io/gifts/images/witch_hat.png"
+    },
+    {
+        "id": 3,
+        "name": "Crystal Ball",
+        "price": "0.69",
+        "image_url": "https://giftsnft.github.io/gifts/images/crystal_ball.png"
+    }
+]
+...
